@@ -1,7 +1,6 @@
 package com.github.nanodesy.birthdayreminder.bot
 
 import com.github.nanodesy.birthdayreminder.bot.command.CommandHandler
-import com.github.nanodesy.birthdayreminder.user.UserService
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 import org.telegram.telegrambots.bots.TelegramLongPollingBot
@@ -14,7 +13,6 @@ class Bot(
   private val username: String,
   @Value("\${bot.token}")
   private val token: String,
-  private val userService: UserService,
   private val commandHandlers: List<CommandHandler>
 ) : TelegramLongPollingBot(token) {
 
