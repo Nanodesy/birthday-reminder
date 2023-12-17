@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: birthdate-reminder
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  datasource:
+    url: jdbc:postgresql://${DATABASE_URL:}/${DATABASE_NAME:}
+    driver-class-name: org.postgresql.Driver
+    username: ${DATABASE_USERNAME:}
+    password: ${DATABASE_PASSWORD:}
+  sql:
+    init:
+      mode: always
+
+bot:
+  username: ${BOT_USERNAME:}
+  token: ${BOT_TOKEN:}
