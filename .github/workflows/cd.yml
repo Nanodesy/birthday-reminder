@@ -8,11 +8,11 @@ jobs:
     runs-on: self-hosted
     environment: Production
     env:
-      DATABASE_URL: ${{ secrets.DATABASE_URL }}
-      DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
+      DATABASE_URL: ${{ vars.DATABASE_URL }}
+      DATABASE_NAME: ${{ vars.DATABASE_NAME }}
       DATABASE_USERNAME: ${{ secrets.DATABASE_USERNAME }}
       DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
-      BOT_USERNAME: ${{ secrets.BOT_USERNAME }}
+      BOT_USERNAME: ${{ vars.BOT_USERNAME }}
       BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
     steps:
       - uses: actions/checkout@v3
