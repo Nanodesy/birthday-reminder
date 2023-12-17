@@ -6,6 +6,7 @@ on:
 jobs:
   deploy:
     runs-on: self-hosted
+    environment: Production
     env:
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
       DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
