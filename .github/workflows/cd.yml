@@ -1,10 +1,6 @@
 name: CI/CD
 
 on:
-  push:
-    branches: [ "develop" ]
-  pull_request:
-    branches: [ "develop" ]
   workflow_dispatch:
 
 permissions:
@@ -26,6 +22,7 @@ jobs:
           arguments: build
   deploy-prepare:
     runs-on: self-hosted
+    needs: build
     steps:
       - name: checkout repo
         uses: actions/checkout@v3
@@ -35,6 +32,7 @@ jobs:
         run: docker system prune -a -f
   deploy:
     runs-on: self-hosted
+    needs: deploy-prepare
     env:
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
       DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
