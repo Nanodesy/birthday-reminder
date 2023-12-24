@@ -36,13 +36,13 @@ class Bot(
     ?.let { log.info(it) }
 
   override fun onUpdateReceived(update: Update?) {
-    val command = update?.message?.text
+    val messageText = update?.message?.text
 
-    if (command != null) {
+    if (messageText != null) {
       commandHandlers
-        .find { command.startsWith("/${it.getCommand()}") }
+        .find { messageText.startsWith("/${it.getCommand()}") }
         ?.handle(update)
-        .let { execute(it) }
+        ?.let { execute(it) }
     }
   }
 

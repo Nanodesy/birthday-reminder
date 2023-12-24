@@ -3,11 +3,9 @@ package com.github.nanodesy.birthdayreminder.bot.command
 import jakarta.annotation.PostConstruct
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage
-import org.telegram.telegrambots.meta.api.objects.Update
 
 @Component
-class HelpCommandHandler : CommandHandler {
+class HelpCommandHandler : AbstractCommandHandler() {
 
   @set: Autowired
   lateinit var commandHandlers: List<CommandHandler>
@@ -25,12 +23,8 @@ class HelpCommandHandler : CommandHandler {
     return "List of commands"
   }
 
-  override fun handle(update: Update): SendMessage {
-    val userTelegramId = update.message.from.id
-    val sendMessage = SendMessage()
-    sendMessage.setChatId(userTelegramId)
-    sendMessage.text = getHelpMessage("/")
-    return sendMessage
+  override fun handleMessage(userTelegramId: Long, messageText: String): String {
+    return getHelpMessage("/")
   }
 
   fun getHelpMessage(commandPrefix: String? = null): String {
