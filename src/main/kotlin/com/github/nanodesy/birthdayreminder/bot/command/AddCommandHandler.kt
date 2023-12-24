@@ -3,6 +3,7 @@ package com.github.nanodesy.birthdayreminder.bot.command
 import com.github.nanodesy.birthdayreminder.person.Person
 import com.github.nanodesy.birthdayreminder.person.PersonService
 import com.github.nanodesy.birthdayreminder.user.UserService
+import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
@@ -18,7 +19,7 @@ class AddCommandHandler(
 ) : CommandHandler {
 
   companion object {
-    val log = LoggerFactory.getLogger(AddCommandHandler::class.java)
+    val log: Logger = LoggerFactory.getLogger(AddCommandHandler::class.java)
   }
 
   override fun getCommand(): String {
