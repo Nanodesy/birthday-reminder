@@ -20,10 +20,6 @@ class Bot(
     return username
   }
 
-  override fun getBotToken(): String {
-    return token
-  }
-
   override fun onUpdateReceived(update: Update?) {
     val command = update?.message?.text
 
