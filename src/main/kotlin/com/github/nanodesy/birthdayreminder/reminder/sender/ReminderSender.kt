@@ -1,6 +1,7 @@
 package com.github.nanodesy.birthdayreminder.reminder.sender
 
 import com.github.nanodesy.birthdayreminder.bot.Bot
+import com.github.nanodesy.birthdayreminder.person.Person
 import com.github.nanodesy.birthdayreminder.reminder.ReminderTask
 import org.springframework.stereotype.Component
 
@@ -16,7 +17,16 @@ class ReminderSenderImpl(
     val person = reminderTask.person
     bot.sendMessageToUser(
       reminderTask.telegramId,
-      "Today is a birthday for ${person.lastname} ${person.firstname} ${person.middlename}."
+      getReminderMessage(person)
     )
+  }
+
+  private fun getReminderMessage(person: Person): String {
+    val sb = StringBuilder()
+    sb.append("Today is a birthday for ${person.lastname} ${person.firstname}")
+    if (person.middlename != null)
+      sb.append(" ${person.middlename}")
+    sb.append(".")
+    return sb.toString()
   }
 }

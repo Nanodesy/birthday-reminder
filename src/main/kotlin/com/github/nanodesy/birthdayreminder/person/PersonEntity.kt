@@ -2,7 +2,6 @@ package com.github.nanodesy.birthdayreminder.person
 
 import com.github.nanodesy.birthdayreminder.user.UserEntity
 import jakarta.persistence.*
-import java.time.LocalDate
 
 @Table(name = "person")
 @Entity
@@ -16,8 +15,12 @@ class PersonEntity(
   var middlename: String?,
   @Column(nullable = false)
   var lastname: String,
-  @Column(nullable = false)
-  var birthdate: LocalDate,
+  @Column(name = "birth_day", nullable = false)
+  var birthDay: Int,
+  @Column(name = "birth_month", nullable = false)
+  var birthMonth: Int,
+  @Column(name = "birth_year")
+  var birthYear: Int?,
   @ManyToOne
   @JoinColumn(name = "user_id")
   var user: UserEntity? = null
@@ -30,5 +33,7 @@ fun mapPersonEntityToPerson(personEntity: PersonEntity): Person = Person(
   personEntity.firstname,
   personEntity.middlename,
   personEntity.lastname,
-  personEntity.birthdate
+  personEntity.birthDay,
+  personEntity.birthMonth,
+  personEntity.birthYear
 )

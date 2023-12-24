@@ -22,8 +22,8 @@ class ReminderRepositoryImpl : ReminderRepository {
         SELECT telegram_id, person.*
         FROM person
             JOIN "user" USING (user_id)
-        WHERE extract(DAY FROM birthdate) = :day
-            AND extract(MONTH FROM birthdate) = :month
+        WHERE birth_day = :day
+            AND birth_month = :month
     """.trimIndent(), PersonEntity::class.java
     )
       .setParameter("day", date.dayOfMonth)

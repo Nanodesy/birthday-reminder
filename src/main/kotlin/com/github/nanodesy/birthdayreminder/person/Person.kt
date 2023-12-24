@@ -1,22 +1,24 @@
 package com.github.nanodesy.birthdayreminder.person
 
-import java.time.LocalDate
-
 class Person(
   var id: Long?,
   var userId: Long?,
   var firstname: String,
   var middlename: String?,
   var lastname: String,
-  var birthdate: LocalDate,
+  var birthDay: Int,
+  var birthMonth: Int,
+  var birthYear: Int?
 ) {
 
   constructor(
     firstname: String,
     middlename: String?,
     lastname: String,
-    birthdate: LocalDate
-  ) : this(null, null, firstname, middlename, lastname, birthdate)
+    birthDay: Int,
+    birthMonth: Int,
+    birthYear: Int?
+  ) : this(null, null, firstname, middlename, lastname, birthDay, birthMonth, birthYear)
 }
 
 fun mapPersonToPersonEntity(person: Person): PersonEntity = PersonEntity(
@@ -24,5 +26,7 @@ fun mapPersonToPersonEntity(person: Person): PersonEntity = PersonEntity(
   person.firstname,
   person.middlename,
   person.lastname,
-  person.birthdate,
+  person.birthDay,
+  person.birthMonth,
+  person.birthYear
 )

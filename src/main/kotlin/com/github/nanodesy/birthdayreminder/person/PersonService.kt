@@ -40,7 +40,9 @@ class PersonService(
     personEntity.firstname = person.firstname
     personEntity.middlename = person.middlename
     personEntity.lastname = person.lastname
-    personEntity.birthdate = person.birthdate
+    personEntity.birthDay = person.birthDay
+    personEntity.birthMonth = person.birthMonth
+    personEntity.birthYear = person.birthYear
     personEntity = personRepository.save(personEntity)
     return mapPersonEntityToPerson(personEntity)
   }

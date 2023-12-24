@@ -6,9 +6,8 @@ import com.github.nanodesy.birthdayreminder.user.UserService
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import java.util.regex.Pattern
+import java.util.stream.Collectors
 
 @Component
 class AddCommandHandler(
@@ -25,8 +24,13 @@ class AddCommandHandler(
   }
 
   override fun getDescription(): String {
-    return "Specify new birthday in following format: lastname firstname middlename birthday. " +
-        "Birthday in format: dd.mm.yyyy"
+    return "Specify new birthday in following format (middlename and birth year are optional): " +
+        "Lastname: Ivanov | " +
+        "Firstname: Ivan | " +
+        "Middlename: Jovanovich | " +
+        "Birth day: 10 | " +
+        "Birth month: 12 | " +
+        "Birth year: 1997"
   }
 
   override fun handleMessage(userTelegramId: Long, messageText: String): String {
@@ -42,15 +46,24 @@ class AddCommandHandler(
   }
 
   fun convertMessageTextToPerson(messageText: String): Person {
-    val fields = messageText
-      .split(Pattern.compile(" +"))
-      .map { it.trim() }
+    val nameValueMap = messageText.substringAfter("/add")
+      .trim()
+      .split(Pattern.compile("\\|"))
+      .stream()
+      .map { it.trim().split(":") }
+      .collect(
+        Collectors.toMap(
+          { it: List<String> -> it[0].trim() },
+          { it: List<String> -> it[1].trim() })
+      )
 
     return Person(
-      fields[1],
-      fields[2],
-      fields[0],
-      LocalDate.parse(fields[3], DateTimeFormatter.ofPattern("dd.MM.yyyy"))
+      nameValueMap["Firstname"]!!,
+      nameValueMap["Middlename"],
+      nameValueMap["Lastname"]!!,
+      nameValueMap["Birth day"]!!.toInt(),
+      nameValueMap["Birth month"]!!.toInt(),
+      nameValueMap["Birth year"]?.toIntOrNull()
     )
   }
 }
