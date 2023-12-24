@@ -12,7 +12,7 @@ class ListCommandHandler(
   private val personService: PersonService
 ) : CommandHandler {
   override fun getCommand(): String {
-    return "/list"
+    return "list"
   }
 
   override fun getDescription(): String {
@@ -39,6 +39,6 @@ class ListCommandHandler(
     birthdays.forEach { sb.append("${it.id}. ${it.lastname} ${it.firstname} ${it.middlename}. ${it.birthdate}. \n") }
     sb.append("Total elements ${birthdays.totalElements}. Page $pageNumber of ${birthdays.totalPages}.")
     sendMessage.text = sb.toString()
-    return sendMessage;
+    return sendMessage
   }
 }

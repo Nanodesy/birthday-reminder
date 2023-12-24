@@ -23,7 +23,7 @@ class AddCommandHandler(
   }
 
   override fun getCommand(): String {
-    return "/add"
+    return "add"
   }
 
   override fun getDescription(): String {

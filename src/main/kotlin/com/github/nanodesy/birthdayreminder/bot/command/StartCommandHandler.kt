@@ -11,7 +11,7 @@ class StartCommandHandler(
   private val userService: UserService
 ) : CommandHandler {
   override fun getCommand(): String {
-    return "/start"
+    return "start"
   }
 
   override fun getDescription(): String {

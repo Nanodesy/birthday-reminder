@@ -1,6 +1,10 @@
 package com.github.nanodesy.birthdayreminder.bot
 
 import com.github.nanodesy.birthdayreminder.bot.command.CommandHandler
+import com.github.nanodesy.birthdayreminder.bot.command.HelpCommandHandler
+import jakarta.annotation.PostConstruct
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 import org.telegram.telegrambots.bots.TelegramLongPollingBot
@@ -16,18 +20,29 @@ class Bot(
   private val commandHandlers: List<CommandHandler>
 ) : TelegramLongPollingBot(token) {
 
+  companion object {
+    val log: Logger = LoggerFactory.getLogger(Bot::class.java)
+  }
+
   override fun getBotUsername(): String {
     return username
   }
+
+  @PostConstruct
+  fun printCommands() = commandHandlers
+    .find { it is HelpCommandHandler }
+    ?.let { it as HelpCommandHandler }
+    ?.getHelpMessage()
+    ?.let { log.info(it) }
 
   override fun onUpdateReceived(update: Update?) {
     val command = update?.message?.text
 
     if (command != null) {
-      val botApiMethod = commandHandlers
-        .find { command.startsWith(it.getCommand()) }
+      commandHandlers
+        .find { command.startsWith("/${it.getCommand()}") }
         ?.handle(update)
-      botApiMethod?.let { execute(it) }
+        .let { execute(it) }
     }
   }
 

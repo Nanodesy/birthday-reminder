@@ -18,7 +18,7 @@ class HelpCommandHandler : CommandHandler {
   }
 
   override fun getCommand(): String {
-    return "/help"
+    return "help"
   }
 
   override fun getDescription(): String {
@@ -29,15 +29,17 @@ class HelpCommandHandler : CommandHandler {
     val userTelegramId = update.message.from.id
     val sendMessage = SendMessage()
     sendMessage.setChatId(userTelegramId)
-    sendMessage.text = getHelpMessage()
+    sendMessage.text = getHelpMessage("/")
     return sendMessage
   }
 
-  private fun getHelpMessage(): String {
+  fun getHelpMessage(commandPrefix: String? = null): String {
     val sb = StringBuilder()
     sb.append("Bot commands:\n")
-    commandHandlers.forEach {
-      sb.append("${it.getCommand()} - ${it.getDescription()}\n")
+    commandHandlers.forEachIndexed() { index, it ->
+      if (commandPrefix != null) sb.append(commandPrefix)
+      sb.append("${it.getCommand()} - ${it.getDescription()}")
+      if (index < commandHandlers.size - 1) sb.appendLine()
     }
     return sb.toString()
   }
